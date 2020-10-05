@@ -67,7 +67,7 @@ func (in *instrumentedService) ListPodSandbox(ctx context.Context, r *runtime.Li
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ListPodSandbox with filter %+v", r.GetFilter())
+	log.G(ctx).Infof("CRI CALL: ListPodSandbox with filter %+v", r.GetFilter())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Error("ListPodSandbox failed")
@@ -83,7 +83,7 @@ func (in *instrumentedService) PodSandboxStatus(ctx context.Context, r *runtime.
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL :PodSandboxStatus for %q", r.GetPodSandboxId())
+	log.G(ctx).Infof("CRI CALL :PodSandboxStatus for %q", r.GetPodSandboxId())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("PodSandboxStatus for %q failed", r.GetPodSandboxId())
@@ -182,7 +182,7 @@ func (in *instrumentedService) ListContainers(ctx context.Context, r *runtime.Li
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ListContainers with filter %+v", r.GetFilter())
+	log.G(ctx).Infof("CRI CALL: ListContainers with filter %+v", r.GetFilter())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("ListContainers with filter %+v failed", r.GetFilter())
@@ -199,7 +199,7 @@ func (in *instrumentedService) ContainerStatus(ctx context.Context, r *runtime.C
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ContainerStatus for %q", r.GetContainerId())
+	log.G(ctx).Infof("CRI CALL: ContainerStatus for %q", r.GetContainerId())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("ContainerStatus for %q failed", r.GetContainerId())
@@ -331,7 +331,7 @@ func (in *instrumentedService) ListImages(ctx context.Context, r *runtime.ListIm
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ListImages with filter %+v", r.GetFilter())
+	log.G(ctx).Infof("CRI CALL: ListImages with filter %+v", r.GetFilter())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("ListImages with filter %+v failed", r.GetFilter())
@@ -348,7 +348,7 @@ func (in *instrumentedService) ImageStatus(ctx context.Context, r *runtime.Image
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ImageStatus for %q", r.GetImage().GetImage())
+	log.G(ctx).Infof("CRI CALL: ImageStatus for %q", r.GetImage().GetImage())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("ImageStatus for %q failed", r.GetImage().GetImage())
@@ -413,7 +413,7 @@ func (in *instrumentedService) ListContainerStats(ctx context.Context, r *runtim
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: ListContainerStats with filter %+v", r.GetFilter())
+	log.G(ctx).Infof("CRI CALL: ListContainerStats with filter %+v", r.GetFilter())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Error("ListContainerStats failed")
@@ -429,7 +429,7 @@ func (in *instrumentedService) Status(ctx context.Context, r *runtime.StatusRequ
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: Status")
+	log.G(ctx).Infof("CRI CALL: Status")
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Error("Status failed")
@@ -445,7 +445,7 @@ func (in *instrumentedService) Version(ctx context.Context, r *runtime.VersionRe
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Tracef("CRI CALL: Version with client side version %q", r.GetVersion())
+	log.G(ctx).Infof("CRI CALL: Version with client side version %q", r.GetVersion())
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Error("Version failed")
