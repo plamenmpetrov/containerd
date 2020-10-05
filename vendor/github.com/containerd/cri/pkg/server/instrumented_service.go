@@ -51,7 +51,7 @@ func (in *instrumentedService) RunPodSandbox(ctx context.Context, r *runtime.Run
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Infof("CRI CALL: RunPodsandbox for %+v", r.GetConfig().GetMetadata())
+	log.G(ctx).Infof("CRI CALL: RunPodsandbox for %+v", r)
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("RunPodSandbox for %+v failed, error", r.GetConfig().GetMetadata())
@@ -148,7 +148,7 @@ func (in *instrumentedService) CreateContainer(ctx context.Context, r *runtime.C
 		return nil, err
 	}
 	log.G(ctx).Infof("CRI CALL: CreateContainer within sandbox %q for container %+v",
-		r.GetPodSandboxId(), r.GetConfig().GetMetadata())
+		r)
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("CreateContainer within sandbox %q for %+v failed",
@@ -166,7 +166,7 @@ func (in *instrumentedService) StartContainer(ctx context.Context, r *runtime.St
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Infof("CRI CALL: StartContainer for %q", r.GetContainerId())
+	log.G(ctx).Infof("CRI CALL: StartContainer for %q", r)
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("StartContainer for %q failed", r.GetContainerId())
@@ -314,7 +314,7 @@ func (in *instrumentedService) PullImage(ctx context.Context, r *runtime.PullIma
 	if err := in.checkInitialized(); err != nil {
 		return nil, err
 	}
-	log.G(ctx).Infof("CRI CALL: PullImage %q", r.GetImage().GetImage())
+	log.G(ctx).Infof("CRI CALL: PullImage %v", r)
 	defer func() {
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("PullImage %q failed", r.GetImage().GetImage())
