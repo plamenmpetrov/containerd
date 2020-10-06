@@ -353,7 +353,7 @@ func (in *instrumentedService) ImageStatus(ctx context.Context, r *runtime.Image
 		if err != nil {
 			log.G(ctx).WithError(err).Errorf("ImageStatus for %q failed", r.GetImage().GetImage())
 		} else {
-			log.G(ctx).Tracef("ImageStatus for %q returns image status %+v",
+			log.G(ctx).Infof("CRI RETURN: ImageStatus for %q returns image status %+v",
 				r.GetImage().GetImage(), res.GetImage())
 		}
 	}()

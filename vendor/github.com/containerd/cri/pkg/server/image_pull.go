@@ -98,10 +98,6 @@ func (c *criService) PullImage(ctx context.Context, r *runtime.PullImageRequest)
 		log.G(ctx).Debugf("PullImage using normalized image ref: %q", ref)
 	}
 	var (
-		resolver = docker.NewResolver(docker.ResolverOptions{
-			Headers: c.config.Registry.Headers,
-			Hosts:   c.registryHosts(r.GetAuth()),
-		})
 		isSchema1    bool
 		imageHandler containerdimages.HandlerFunc = func(_ context.Context,
 			desc imagespec.Descriptor) ([]imagespec.Descriptor, error) {
@@ -114,24 +110,11 @@ func (c *criService) PullImage(ctx context.Context, r *runtime.PullImageRequest)
 
 	pullOpts := []containerd.RemoteOpt{
 		containerd.WithSchema1Conversion,
-		containerd.WithResolver(resolver),
 		containerd.WithPullSnapshotter(c.config.ContainerdConfig.Snapshotter),
 		containerd.WithPullUnpack,
 		containerd.WithPullLabel(imageLabelKey, imageLabelValue),
 		containerd.WithMaxConcurrentDownloads(c.config.MaxConcurrentDownloads),
 		containerd.WithImageHandler(imageHandler),
-	}
-
-	pullOpts = append(pullOpts, c.encryptedImagesPullOpts()...)
-	if !c.config.ContainerdConfig.DisableSnapshotAnnotations {
-		pullOpts = append(pullOpts,
-			containerd.WithImageHandlerWrapper(appendInfoHandlerWrapper(ref)))
-	}
-
-	if c.config.ContainerdConfig.DiscardUnpackedLayers {
-		// Allows GC to clean layers up from the content store after unpacking
-		pullOpts = append(pullOpts,
-			containerd.WithChildLabelMap(containerdimages.ChildGCLabelsFilterLayers))
 	}
 
 	image, err := c.client.Pull(ctx, ref, pullOpts...)
